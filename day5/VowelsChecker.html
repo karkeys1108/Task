@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vowel Checker in a Word</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .check-vowels {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        .check-vowels label {
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: block;
+            font-weight: bold;
+        }
+        .check-vowels input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .check-vowels button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .check-vowels button:hover {
+            background-color: #0056b3;
+        }
+        .check-vowels button:active {
+            background-color: #004491;
+        }
+        .check-vowels button:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="check-vowels">
+        <label for="sentence">Enter a Word:</label>
+        <input type="text" name="sentence" id="sentence" placeholder="Type a word here">
+        <button onclick="checkVowels()">Check Vowels</button>
+    </div>
+
+    <script>
+        function checkVowels() {
+            const input = document.getElementById('sentence').value.trim().toLowerCase();
+            const vowels = ['a', 'e', 'i', 'o', 'u'];
+            let vowelCount = 0;
+            let consonantCount = 0;
+
+            if (!input) {
+                alert("Please enter a word.");
+                return;
+            }
+
+            if (!/^[a-z]+$/.test(input)) {
+                alert("Please enter a valid word containing only alphabets.");
+                return;
+            }
+
+            for (const char of input) {
+                if (vowels.includes(char)) {
+                    vowelCount++;
+                } else {
+                    consonantCount++;
+                }
+            }
+
+            const totalCharacters = input.length;
+            const vowelPercentage = ((vowelCount / totalCharacters) * 100).toFixed(2);
+            const consonantPercentage = ((consonantCount / totalCharacters) * 100).toFixed(2);
+
+            const resultMessage = `
+                Word: ${input}
+                Total Characters: ${totalCharacters}
+                Total Vowels: ${vowelCount}
+                Total Consonants: ${consonantCount}
+                Vowel Percentage: ${vowelPercentage}%
+                Consonant Percentage: ${consonantPercentage}%
+            `;
+            alert(resultMessage);
+        }
+    </script>
+</body>
+</html>

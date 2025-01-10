@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Odd or Even Checker</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .check-number {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        .check-number label {
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: block;
+            font-weight: bold;
+        }
+        .check-number input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .check-number button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .check-number button:hover {
+            background-color: #0056b3;
+        }
+        .check-number button:active {
+            background-color: #004491;
+        }
+        .check-number button:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="check-number">
+        <label for="number">Enter a Number:</label>
+        <input type="number" name="number" id="number" placeholder="Type a number here">
+        <button onclick="checkNumber()">Check</button>
+    </div>
+
+    <script>
+        function checkNumber() {
+            const input = document.getElementById('number').value;
+            const number = parseFloat(input);
+
+            if (isNaN(number)) {
+                alert("Please enter a valid number.");
+                return;
+            }
+
+            let result = "";
+            const sign = number < 0 ? "negative" : "positive";
+            const parity = number % 2 === 0 ? "even" : "odd";
+
+            switch (sign) {
+                case "negative":
+                    result += "The number is negative. ";
+                    break;
+                case "positive":
+                    result += "The number is positive. ";
+                    break;
+            }
+
+            switch (parity) {
+                case "even":
+                    result += "It is an even number.";
+                    break;
+                case "odd":
+                    result += "It is an odd number.";
+                    break;
+            }
+
+            alert(result);
+        }
+    </script>
+</body>
+</html>

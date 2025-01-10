@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting Eligibility Check</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .Voting {
+            margin: auto;
+            width: 400px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="date"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        #eligibilityMessage {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .eligible {
+            color: green;
+        }
+        .not-eligible {
+            color: red;
+        }
+        @media screen and (max-width: 600px) {
+            .Voting {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="Voting">
+        <h1>Voting Eligibility Check</h1>
+        <form id="votingForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required>
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="">Select your gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+            <button type="submit">Check Eligibility</button>
+        </form>
+        <p>Note: Only citizens of India who are 18 years or above can vote.</p>
+        <p>Current date: <span id="currentDate"></span></p>
+        <p id="eligibilityMessage"></p>
+    </div>
+    <script>
+        const form = document.getElementById('votingForm');
+        const dobInput = document.getElementById('dob');
+        const eligibilityMessage = document.getElementById('eligibilityMessage');
+        const currentDateSpan = document.getElementById('currentDate');
+        const ageLimit = 18;
+
+        // Set current date
+        const currentDate = new Date();
+        currentDateSpan.textContent = currentDate.toISOString().split('T')[0];
+
+        function calculateAge(birthDate, currentDate) {
+            let age = currentDate.getFullYear() - birthDate.getFullYear();
+            const monthDiff = currentDate.getMonth() - birthDate.getMonth();
+            if (monthDiff < 0 || (monthDiff === 0 && currentDate.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            return age;
+        }
+
+        function checkEligibility(event) {
+            event.preventDefault();
+            const dob = new Date(dobInput.value);
+            const age = calculateAge(dob, currentDate);
+
+            if (age < ageLimit) {
+                eligibilityMessage.textContent = `You are not eligible to vote. You must be at least ${ageLimit} years old.`;
+                eligibilityMessage.className = 'not-eligible';
+            } else {
+                eligibilityMessage.textContent = 'You are eligible to vote!';
+                eligibilityMessage.className = 'eligible';
+            }
+        }
+
+        form.addEventListener('submit', checkEligibility);
+    </script>
+</body>
+</html>
